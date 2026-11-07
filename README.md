@@ -14,9 +14,11 @@ Only code that knows nothing about Gameyfin or RomM. Anything tied to one source
 | `deckycommon/images.py` | ditto | On-disk image cache that feeds images through the ~1 MiB bridge in chunks |
 | `deckycommon/sgdb.py` | ditto | SteamGridDB client, id resolution, `art_plan` |
 | `deckycommon/selfupdate.py` | ditto | Checks GitHub releases (`Updater(repo, asset_prefix)`) |
+| `deckycommon/phoneform.py` | ditto | Short-lived LAN page where a phone sends a token or key (`PhoneForm`, `shell`, `sgdb_section`) |
 | `ts/Cover.tsx` | `src/common/` | Cover image component with a thumbnail cache |
 | `ts/artwork.ts` | `src/common/` | `applyArtwork(appId, plan)`: Steam capsule, wide, hero and logo |
 | `ts/ArtworkPanel.tsx` | `src/common/` | QAM section for the SteamGridDB key and square covers; phone flow optional |
+| `ts/PhoneModal.tsx` | `src/common/` | QR code and status for a `PhoneForm`; backend calls passed as props |
 | `scripts/cdp.py` | `scripts/cdp.py` | Runs JS in the Deck's SharedJSContext; `call()` targets the plugin named in `plugin.json` |
 
 ## Contracts with the plugin
@@ -24,7 +26,7 @@ Only code that knows nothing about Gameyfin or RomM. Anything tied to one source
 - **Python:** imports inside the package are relative, so it works as `<pkg>.common`.
   - The plugin's `client.py` aliases the error type (`GameyfinError = PluginError`, not a subclass), so its own `except` catches errors raised here.
   - It also calls `net.set_user_agent(...)`.
-- **TypeScript:** files import `../backend`, which resolves to the plugin's `src/backend.ts`. The exports each file needs are listed at its top. Each plugin's `pnpm typecheck` enforces this.
+- **TypeScript:** files import `../backend` (except `PhoneModal`, which takes its calls as props), which resolves to the plugin's `src/backend.ts`. The exports each file needs are listed at its top. Each plugin's `pnpm typecheck` enforces this.
 
 ## Workflow
 
