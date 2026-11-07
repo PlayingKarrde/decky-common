@@ -67,6 +67,15 @@ class PhoneFormTests(unittest.TestCase):
         self.assertEqual(req(f"{self.base}/{self.f.code}", raw=b"x" * (phoneform.MAX_BODY + 1))[0], 400)
         self.assertEqual(self.f.state, "waiting")
 
+    def test_send_script_reads_only_form_controls(self):
+        # Regression: querySelectorAll("[name]") also matched <meta name="viewport">, whose
+        # missing .value threw before fetch, so phones showed "Couldn't reach the Deck".
+        # (The script itself was checked in Steam's CEF; this pins the selector.)
+        page = phoneform.shell("T", phoneform.sgdb_section(False))
+        self.assertIn('<meta name="viewport"', page)
+        self.assertNotIn('querySelectorAll("[name]")', page)
+        self.assertIn("main input[name], main textarea[name]", page)
+
     def test_sections(self):
         self.assertIn("already saved", phoneform.sgdb_section(True))
         self.assertIn("Optional.", phoneform.sgdb_section(False))
