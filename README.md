@@ -16,6 +16,7 @@ Only code that knows nothing about Gameyfin or RomM. Anything tied to one source
 | `deckycommon/selfupdate.py` | ditto | Checks GitHub releases (`Updater(repo, asset_prefix)`) |
 | `ts/Cover.tsx` | `src/common/` | Cover image component with a thumbnail cache |
 | `ts/artwork.ts` | `src/common/` | `applyArtwork(appId, plan)`: Steam capsule, wide, hero and logo |
+| `ts/ArtworkPanel.tsx` | `src/common/` | QAM section for the SteamGridDB key and square covers; phone flow optional |
 | `scripts/cdp.py` | `scripts/cdp.py` | Runs JS in the Deck's SharedJSContext; `call()` targets the plugin named in `plugin.json` |
 
 ## Contracts with the plugin
